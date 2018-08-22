@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.slionh.funhere.mapper.ActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.slionh.funhere.entity.Activity" >
+    <id column="activityId" property="activityid" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="positionName" property="positionname" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="startTime" property="starttime" jdbcType="DATE" />
+    <result column="endTime" property="endtime" jdbcType="DATE" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.slionh.funhere.entity.Activity" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    activityId, title, userId, amount, positionName, position, startTime, endTime, level, 
+    type
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.slionh.funhere.entity.ActivityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.slionh.funhere.entity.ActivityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from activity
+    where activityId = #{activityid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from activity
+    where activityId = #{activityid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.slionh.funhere.entity.ActivityExample" >
+    delete from activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.slionh.funhere.entity.Activity" >
+    insert into activity (activityId, title, userId, 
+      amount, positionName, position, 
+      startTime, endTime, level, 
+      type, content)
+    values (#{activityid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, 
+      #{amount,jdbcType=INTEGER}, #{positionname,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, 
+      #{starttime,jdbcType=DATE}, #{endtime,jdbcType=DATE}, #{level,jdbcType=INTEGER}, 
+      #{type,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.slionh.funhere.entity.Activity" >
+    insert into activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="activityid != null" >
+        activityId,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="positionname != null" >
+        positionName,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="starttime != null" >
+        startTime,
+      </if>
+      <if test="endtime != null" >
+        endTime,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="activityid != null" >
+        #{activityid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="positionname != null" >
+        #{positionname,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=DATE},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=DATE},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.slionh.funhere.entity.ActivityExample" resultType="java.lang.Integer" >
+    select count(*) from activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update activity
+    <set >
+      <if test="record.activityid != null" >
+        activityId = #{record.activityid,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null" >
+        userId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.positionname != null" >
+        positionName = #{record.positionname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position != null" >
+        position = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.starttime != null" >
+        startTime = #{record.starttime,jdbcType=DATE},
+      </if>
+      <if test="record.endtime != null" >
+        endTime = #{record.endtime,jdbcType=DATE},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update activity
+    set activityId = #{record.activityid,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      userId = #{record.userid,jdbcType=INTEGER},
+      amount = #{record.amount,jdbcType=INTEGER},
+      positionName = #{record.positionname,jdbcType=VARCHAR},
+      position = #{record.position,jdbcType=VARCHAR},
+      startTime = #{record.starttime,jdbcType=DATE},
+      endTime = #{record.endtime,jdbcType=DATE},
+      level = #{record.level,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update activity
+    set activityId = #{record.activityid,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      userId = #{record.userid,jdbcType=INTEGER},
+      amount = #{record.amount,jdbcType=INTEGER},
+      positionName = #{record.positionname,jdbcType=VARCHAR},
+      position = #{record.position,jdbcType=VARCHAR},
+      startTime = #{record.starttime,jdbcType=DATE},
+      endTime = #{record.endtime,jdbcType=DATE},
+      level = #{record.level,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.slionh.funhere.entity.Activity" >
+    update activity
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="positionname != null" >
+        positionName = #{positionname,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        startTime = #{starttime,jdbcType=DATE},
+      </if>
+      <if test="endtime != null" >
+        endTime = #{endtime,jdbcType=DATE},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where activityId = #{activityid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.slionh.funhere.entity.Activity" >
+    update activity
+    set title = #{title,jdbcType=VARCHAR},
+      userId = #{userid,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=INTEGER},
+      positionName = #{positionname,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      startTime = #{starttime,jdbcType=DATE},
+      endTime = #{endtime,jdbcType=DATE},
+      level = #{level,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where activityId = #{activityid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.slionh.funhere.entity.Activity" >
+    update activity
+    set title = #{title,jdbcType=VARCHAR},
+      userId = #{userid,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=INTEGER},
+      positionName = #{positionname,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      startTime = #{starttime,jdbcType=DATE},
+      endTime = #{endtime,jdbcType=DATE},
+      level = #{level,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR}
+    where activityId = #{activityid,jdbcType=INTEGER}
+  </update>
+</mapper>

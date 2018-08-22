@@ -1,0 +1,31 @@
+package com.slionh.funhere.controller;
+
+import com.slionh.funhere.entity.Type;
+import com.slionh.funhere.service.FormServer;
+import com.slionh.funhere.service.TypeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.List;
+
+/*
+ * Create by s lion h on 2018/8/22
+ */
+@Controller
+public class indexController {
+    @Autowired
+//    private TypeService typeService;
+    private FormServer formServer;
+
+    @RequestMapping("/")
+    @ResponseBody
+    public List<Type> toIndex(){
+//        List<Type> types=typeService.listType();
+        List<Type> types=formServer.listFormType();
+        formServer.getTodayDate();
+        return types;
+    }
+}
