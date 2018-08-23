@@ -23,6 +23,7 @@ public class FormServerImpl implements FormServer {
     public HashMap getForm() {
         HashMap hashMap=new HashMap();
         hashMap.put("todayDate",getTodayDate());
+        hashMap.put("suggestTime",getSuggestTime());
         hashMap.put("types",listFormType());
         return hashMap;
     }
@@ -38,5 +39,11 @@ public class FormServerImpl implements FormServer {
     public String getTodayDate() {
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
         return simpleDateFormat.format(new Date());
+    }
+
+//    获取建议时间
+    @Override
+    public String getSuggestTime() {
+        return "15:00:00";
     }
 }

@@ -12,4 +12,5 @@ public interface FormServer {
     HashMap getForm();
     List<Type> listFormType();
     String getTodayDate();
+    String getSuggestTime();
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,12 +21,17 @@ public class indexController {
 //    private TypeService typeService;
     private FormServer formServer;
 
-    @RequestMapping("/")
+    @RequestMapping("/11")
     @ResponseBody
-    public List<Type> toIndex(){
+    public List<Type> toIndex(HttpServletRequest request){
 //        List<Type> types=typeService.listType();
         List<Type> types=formServer.listFormType();
         formServer.getTodayDate();
         return types;
+    }
+
+    @RequestMapping("/")
+    public String index(){
+        return "index";
     }
 }
