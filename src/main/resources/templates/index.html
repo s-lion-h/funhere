@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,10 +26,17 @@
             float: left;
             margin: 3px;
         }
+        ul li{
+            list-style:none;
+            /*width: 50%;*/
+        }
     </style>
     <!--<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=2b35126bc659f27d0df08adab38be5bc&plugin=AMap.Autocomplete"></script>-->
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=2b35126bc659f27d0df08adab38be5bc&plugin=AMap.AdvancedInfoWindow,AMap.Autocomplete"></script>
     <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/4.1.1/css/bootstrap.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.js"></script>
 </head>
 <body>
 <div id="container"></div>
@@ -51,6 +58,32 @@
                 <input type="text" readonly="true" id="lnglat">
             </td>
         </tr>
+        <div id="typeslist" style="DISPLAY: none;">
+            <div class="info-title">在这玩</div>
+            <div class="info-content">
+                <h2>活动类型</h2>
+                <label>标题</label><input type="text" name="title"><br/>
+                <ul>
+                    <li th:each="type:${types}">
+                        <!--<p th:text="${type}"></p>-->
+                        <label th:text="${type.name}"></label>
+                        <input type="checkbox" name="type" th:value="${type.typeid}">
+                    </li>
+                </ul>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Active
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="options" id="option2" autocomplete="off"> Radio
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="options" id="option3" autocomplete="off"> Radio
+                    </label>
+                </div>
+                <input type="submit" value="提交">
+            </div>
+        </div>
     </table>
 </div>
 <script type="text/javascript">
@@ -70,6 +103,7 @@
         var point=[e.lnglat.getLng(),e.lnglat.getLat()];
         marker.setPosition(point);
         infowindow2.open(map,point);
+        document.getElementById("typeslist").style.display="";
     });
     var rightEventListener = map.on('contextmenu', function(e) {
         console.log(e);
@@ -107,9 +141,12 @@
     });
     text.setMap(map);
 
+    // 获取生成types层叠
+    var content3=document.getElementById("typeslist")
+    console.log(content3)
 
-    // 信息框体2
-    var content2='<div class="info-title">在这玩</div><div class="info-content">' +
+    // 列表信息框体2
+    /*var content2='<div class="info-title">在这玩</div><div class="info-content">' +
         '<label>标题</label><input type="text" name="title"><br/>' +
         '<h2>活动类型</h2>' +
         '<label>飙车</label><input type="checkbox" name="yi" value="yi">' +
@@ -117,18 +154,28 @@
         '<label>广场舞</label><input type="checkbox" name="san" value="san">' +
         '<br>' +
         '<input type="submit" value="提交">' +
-        '</div>';
+        '</div>';*/
     // 信息框体
-    var content='<div class="info-title">高德地图</div><div class="info-content">' +
+    /*var content='<div class="info-title">高德地图</div><div class="info-content">' +
         '<img src="https://webapi.amap.com/images/amap.jpg">' +
         '高德是中国领先的数字地图内容、导航和位置服务解决方案提供商。<br/>' +
-        '<a target="_blank" href = "https://mobile.amap.com/">点击下载高德地图</a></div>';
+        '<a target="_blank" href = "https://mobile.amap.com/">点击下载高德地图</a></div>';*/
     var  infowindow2 = new AMap.AdvancedInfoWindow({
-        content: content2,
+        content: content3,
         asOrigin: false,
         asDestination: false,
         offset: new AMap.Pixel(0, -30)
     });
+
+
+    // types点击按钮active切换
+    /*$(document).ready(function(){
+        $('ul > li').click(function (e) {
+            e.preventDefault();
+            $('ul.nav > li').removeClass('active');
+            $(this).addClass('active');
+        });
+    });*/
 </script>
 </body>
 </html>
