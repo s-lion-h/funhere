@@ -28,7 +28,7 @@
         }
     </style>
     <!--<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=2b35126bc659f27d0df08adab38be5bc&plugin=AMap.Autocomplete"></script>-->
-    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=2b35126bc659f27d0df08adab38be5bc&plugin=AMap.AdvancedInfoWindow"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=2b35126bc659f27d0df08adab38be5bc&plugin=AMap.AdvancedInfoWindow,AMap.Autocomplete"></script>
     <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
 </head>
 <body>
@@ -57,23 +57,33 @@
     var map = new AMap.Map("container", {
         resizeEnable: true
     });
+
+    marker = new AMap.Marker({
+        map: map,
+        icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png',
+        position: [116.405467, 39.907761]
+    });
     //为地图注册click事件获取鼠标点击出的经纬度坐标
     var clickEventListener = map.on('click', function(e) {
         document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat();
-        // addMarker(e.lnglat.getLng(),e.lnglat.getLat());
+        console.log(e);
+        var point=[e.lnglat.getLng(),e.lnglat.getLat()];
+        marker.setPosition(point);
+        infowindow2.open(map,point);
     });
     var rightEventListener = map.on('contextmenu', function(e) {
-        // document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat();
         console.log(e);
         var point=[e.lnglat.getLng(),e.lnglat.getLat()];
         addMarker(e.lnglat.getLng(),e.lnglat.getLat());
-        infowindow2.open(map,point);
+        marker.setPosition(point);
+        // infowindow2.open(map,point);
     });
 
-    // var auto = new AMap.Autocomplete({
-    //     input: "tipinput"
-    // });
-    // AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
+    // 允许标记点自动选择
+    var auto = new AMap.Autocomplete({
+        input: "tipinput"
+    });
+    AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
     function select(e) {
         if (e.poi && e.poi.location) {
             map.setZoom(15);
@@ -97,22 +107,24 @@
     });
     text.setMap(map);
 
-    // 实例化点标记
-    function addMarker(x,y) {
-        marker = new AMap.Marker({
-            icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
-            position: [x,y]
-        });
-        marker.setMap(map);
-    }
 
+    // 信息框体2
+    var content2='<div class="info-title">在这玩</div><div class="info-content">' +
+        '<label>标题</label><input type="text" name="title"><br/>' +
+        '<h2>活动类型</h2>' +
+        '<label>飙车</label><input type="checkbox" name="yi" value="yi">' +
+        '<label>蹦迪</label><input type="checkbox" name="er" value="er">' +
+        '<label>广场舞</label><input type="checkbox" name="san" value="san">' +
+        '<br>' +
+        '<input type="submit" value="提交">' +
+        '</div>';
     // 信息框体
     var content='<div class="info-title">高德地图</div><div class="info-content">' +
         '<img src="https://webapi.amap.com/images/amap.jpg">' +
         '高德是中国领先的数字地图内容、导航和位置服务解决方案提供商。<br/>' +
         '<a target="_blank" href = "https://mobile.amap.com/">点击下载高德地图</a></div>';
     var  infowindow2 = new AMap.AdvancedInfoWindow({
-        content: content,
+        content: content2,
         asOrigin: false,
         asDestination: false,
         offset: new AMap.Pixel(0, -30)
