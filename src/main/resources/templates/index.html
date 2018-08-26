@@ -59,29 +59,40 @@
             </td>
         </tr>
         <div id="typeslist" style="DISPLAY: none;">
-            <div class="info-title">在这玩</div>
+            <div class="info-title">fun here</div>
             <div class="info-content">
-                <h2>活动类型</h2>
-                <label>标题</label><input type="text" name="title"><br/>
-                <ul>
+                <!--<label class="btn">标题 : </label><input type="text" name="title"><br/>-->
+                <!--<div class="form-group">
+                    <label for="exampleFormControlInput1">标题</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="想玩点啥呗">
+                </div>-->
+                <div class="form-group row">
+                    <label for="exampleFormControlInput1" class="col-sm-3 col-form-label"><h5>标题:</h5></label>
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="想玩点啥呗">
+                    </div>
+                </div>
+                <!--<ul>
                     <li th:each="type:${types}">
-                        <!--<p th:text="${type}"></p>-->
+                        &lt;!&ndash;<p th:text="${type}"></p>&ndash;&gt;
                         <label th:text="${type.name}"></label>
                         <input type="checkbox" name="type" th:value="${type.typeid}">
                     </li>
-                </ul>
+                </ul>-->
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-secondary active">
-                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Active
+                    <label class="btn btn-outline-primary btn-sm checked">
+                        <input type="radio" name="type" autocomplete="off" th:text="其他" th:value="other">
                     </label>
-                    <label class="btn btn-secondary">
-                        <input type="radio" name="options" id="option2" autocomplete="off"> Radio
-                    </label>
-                    <label class="btn btn-secondary">
-                        <input type="radio" name="options" id="option3" autocomplete="off"> Radio
+                    <label class="btn btn-outline-primary btn-sm" th:each="type:${types}">
+                        <input type="radio" name="type" autocomplete="off" th:text="${type.name}" th:value="${type.typeid}">
                     </label>
                 </div>
-                <input type="submit" value="提交">
+                <hr/>
+                <div class="row justify-content-md-center">
+                    <div class="col-sm-auto">
+                        <input class="btn btn-primary btn-sm" type="submit" value="提交">
+                    </div>
+                </div>
             </div>
         </div>
     </table>
