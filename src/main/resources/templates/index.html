@@ -31,10 +31,10 @@
             /*width: 50%;*/
         }
     </style>
+    <script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.js"></script>
     <!--<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=2b35126bc659f27d0df08adab38be5bc&plugin=AMap.Autocomplete"></script>-->
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=2b35126bc659f27d0df08adab38be5bc&plugin=AMap.AdvancedInfoWindow,AMap.Autocomplete"></script>
     <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.js"></script>
     <link href="https://cdn.bootcss.com/bootstrap/4.1.1/css/bootstrap.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.js"></script>
 </head>
@@ -86,7 +86,7 @@
         </div>
     </table>
 </div>
-<script type="text/javascript">
+<script th:inline="javascript">
     var map = new AMap.Map("container", {
         resizeEnable: true
     });
@@ -143,6 +143,29 @@
         position: [116.093666,40.060287]
     });
     text.setMap(map);
+
+    for (i=0; i < [[${activity}]].length;i++){
+        var str=[[${activity}]][i].position;
+        var positionXY=str.split(",");
+        console.log(positionXY)
+        console.log([[${activity}]][i]);
+        var text2 = new AMap.Text({
+            text:[[${activity}]][i].type,
+            textAlign:'center', // 'left' 'right', 'center',
+            verticalAlign:'middle', //middle 、bottom
+            // draggable:true,
+            // cursor:'pointer',
+            angle:10,
+            style:{
+                'background-color':'pink',
+                'border':'solid 1px #0088ff',
+                'padding':'10px 20px'
+            },
+            position: positionXY
+        });
+        text2.setMap(map);
+    }
+    // console.log([[${activity}]][1].position)
 
     // 获取生成types层叠
     var content3=document.getElementById("typeslist")

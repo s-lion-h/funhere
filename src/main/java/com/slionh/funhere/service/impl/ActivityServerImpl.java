@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /*
  * Create by s lion h on 2018/8/26
@@ -27,5 +28,13 @@ public class ActivityServerImpl implements ActivityServer {
         int i = activityMapper.insert(activity);
         System.out.println(i);
         return i;
+    }
+
+    @Override
+    public List<Activity> listAllActivity() {
+        ActivityExample activityExample=new ActivityExample();
+        List<Activity> list=activityMapper.selectByExample(activityExample);
+        System.out.println(list.toString());
+        return list;
     }
 }

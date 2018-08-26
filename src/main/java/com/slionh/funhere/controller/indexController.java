@@ -1,6 +1,7 @@
 package com.slionh.funhere.controller;
 
 import com.slionh.funhere.entity.Type;
+import com.slionh.funhere.service.ActivityServer;
 import com.slionh.funhere.service.FormServer;
 import com.slionh.funhere.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class indexController {
 //    private TypeService typeService;
     private FormServer formServer;
 
+    @Autowired
+    private ActivityServer activityServer;
+
     @RequestMapping("/11")
     @ResponseBody
     public List<Type> toIndex(HttpServletRequest request){
@@ -35,6 +39,7 @@ public class indexController {
     public ModelAndView index(HttpServletRequest request,ModelAndView modelAndView){
         modelAndView.setViewName("index");
         modelAndView.addObject("types",formServer.listFormType());
+        modelAndView.addObject("activity",activityServer.listAllActivity());
         return modelAndView;
     }
 }
