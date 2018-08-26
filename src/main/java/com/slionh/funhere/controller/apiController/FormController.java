@@ -1,8 +1,7 @@
-package com.slionh.funhere.controller.functionController;
+package com.slionh.funhere.controller.apiController;
 
 import com.slionh.funhere.service.FormServer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

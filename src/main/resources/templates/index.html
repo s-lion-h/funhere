@@ -67,21 +67,15 @@
                     <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="想玩点啥呗">
                 </div>-->
                 <div class="form-group row">
-                    <label for="exampleFormControlInput1" class="col-sm-3 col-form-label"><h5>标题:</h5></label>
+                    <label for="activityTitle" class="col-sm-3 col-form-label"><h5>标题:</h5></label>
                     <div class="col-sm-9">
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="想玩点啥呗">
+                        <input type="text" class="form-control" id="activityTitle" placeholder="想玩点啥呗">
                     </div>
                 </div>
-                <!--<ul>
-                    <li th:each="type:${types}">
-                        &lt;!&ndash;<p th:text="${type}"></p>&ndash;&gt;
-                        <label th:text="${type.name}"></label>
-                        <input type="checkbox" name="type" th:value="${type.typeid}">
-                    </li>
-                </ul>-->
+
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary btn-sm checked">
-                        <input type="radio" name="type" autocomplete="off" th:text="其他" th:value="other">
+                    <label class="btn btn-outline-primary btn-sm active">
+                        <input type="radio" name="type" autocomplete="off" checked th:text="其他" th:value="0">
                     </label>
                     <label class="btn btn-outline-primary btn-sm" th:each="type:${types}">
                         <input type="radio" name="type" autocomplete="off" th:text="${type.name}" th:value="${type.typeid}">
@@ -90,7 +84,7 @@
                 <hr/>
                 <div class="row justify-content-md-center">
                     <div class="col-sm-auto">
-                        <input class="btn btn-primary btn-sm" type="submit" value="提交">
+                        <input class="btn btn-primary btn-sm" type="submit" value="提交" onclick="pushActivity()">
                     </div>
                 </div>
             </div>
@@ -154,7 +148,7 @@
 
     // 获取生成types层叠
     var content3=document.getElementById("typeslist")
-    console.log(content3)
+    // console.log(content3)
 
     // 列表信息框体2
     /*var content2='<div class="info-title">在这玩</div><div class="info-content">' +
@@ -187,6 +181,42 @@
             $(this).addClass('active');
         });
     });*/
+    
+    function pushActivity() {
+        var title=$("#activityTitle").val();
+        var type=$("input[name='type']:checked").val();
+        console.log(title)
+        console.log(type)
+
+        $.ajax({
+            type : 'post',
+            async : true,
+            url : '/titleType?title='+title+'&type='+type,
+            cache : false,
+            success : function(data) {
+                // $("#calendar").html(data);
+                // $("#loading").fadeOut();
+                console.log(data)
+                $("#myPageTop").append("<div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">\n" +
+                    "  <strong>成功!</strong> 但完善了才能公开哦.--><a href='#'>去完善</a>\n" +
+                    "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
+                    "    <span aria-hidden=\"true\">&times;</span>\n" +
+                    "  </button>\n" +
+                    "</div>")
+                setTimeout("$('.alert').fadeOut(2000);", 5000 )
+                // $('.alert').fadeOut();
+            },
+            error : function () {
+                $("#myPageTop").append("<div class=\"alert alert-warning alert-dismissible fade show\" role=\"alert\">\n" +
+                    "  <strong>错误!</strong> -->检查网络状况\n" +
+                    "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
+                    "    <span aria-hidden=\"true\">&times;</span>\n" +
+                    "  </button>\n" +
+                    "</div>")
+                setTimeout("$('.alert').fadeOut(2000);", 3000 )
+            }
+        });
+    }
 </script>
 </body>
 </html>
