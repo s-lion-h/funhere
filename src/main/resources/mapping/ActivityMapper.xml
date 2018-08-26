@@ -12,6 +12,8 @@
     <result column="endTime" property="endtime" jdbcType="DATE" />
     <result column="level" property="level" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="model" property="model" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.slionh.funhere.entity.Activity" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
@@ -76,7 +78,7 @@
   </sql>
   <sql id="Base_Column_List" >
     activityId, title, userId, amount, positionName, position, startTime, endTime, level, 
-    type
+    type, model, createTime
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -133,11 +135,13 @@
     insert into activity (activityId, title, userId, 
       amount, positionName, position, 
       startTime, endTime, level, 
-      type, content)
+      type, model, createTime, 
+      content)
     values (#{activityid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, 
       #{amount,jdbcType=INTEGER}, #{positionname,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, 
       #{starttime,jdbcType=DATE}, #{endtime,jdbcType=DATE}, #{level,jdbcType=INTEGER}, 
-      #{type,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+      #{type,jdbcType=VARCHAR}, #{model,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.slionh.funhere.entity.Activity" >
     insert into activity
@@ -171,6 +175,12 @@
       </if>
       <if test="type != null" >
         type,
+      </if>
+      <if test="model != null" >
+        model,
+      </if>
+      <if test="createtime != null" >
+        createTime,
       </if>
       <if test="content != null" >
         content,
@@ -206,6 +216,12 @@
       </if>
       <if test="type != null" >
         #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
@@ -251,6 +267,12 @@
       <if test="record.type != null" >
         type = #{record.type,jdbcType=VARCHAR},
       </if>
+      <if test="record.model != null" >
+        model = #{record.model,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.content != null" >
         content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
@@ -271,6 +293,8 @@
       endTime = #{record.endtime,jdbcType=DATE},
       level = #{record.level,jdbcType=INTEGER},
       type = #{record.type,jdbcType=VARCHAR},
+      model = #{record.model,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -287,7 +311,9 @@
       startTime = #{record.starttime,jdbcType=DATE},
       endTime = #{record.endtime,jdbcType=DATE},
       level = #{record.level,jdbcType=INTEGER},
-      type = #{record.type,jdbcType=VARCHAR}
+      type = #{record.type,jdbcType=VARCHAR},
+      model = #{record.model,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -322,6 +348,12 @@
       <if test="type != null" >
         type = #{type,jdbcType=VARCHAR},
       </if>
+      <if test="model != null" >
+        model = #{model,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
       <if test="content != null" >
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -339,6 +371,8 @@
       endTime = #{endtime,jdbcType=DATE},
       level = #{level,jdbcType=INTEGER},
       type = #{type,jdbcType=VARCHAR},
+      model = #{model,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
       content = #{content,jdbcType=LONGVARCHAR}
     where activityId = #{activityid,jdbcType=INTEGER}
   </update>
@@ -352,7 +386,9 @@
       startTime = #{starttime,jdbcType=DATE},
       endTime = #{endtime,jdbcType=DATE},
       level = #{level,jdbcType=INTEGER},
-      type = #{type,jdbcType=VARCHAR}
+      type = #{type,jdbcType=VARCHAR},
+      model = #{model,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
     where activityId = #{activityid,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,0 +1,31 @@
+package com.slionh.funhere.service.impl;
+
+import com.slionh.funhere.entity.Activity;
+import com.slionh.funhere.entity.ActivityExample;
+import com.slionh.funhere.mapper.ActivityMapper;
+import com.slionh.funhere.service.ActivityServer;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.Date;
+
+/*
+ * Create by s lion h on 2018/8/26
+ * 从首页插入activity时，model为1，代表仅添加title type 经纬度
+ * 不能对外展示，需要进一步确认信息
+ */
+@Service
+public class ActivityServerImpl implements ActivityServer {
+    @Resource
+    private ActivityMapper activityMapper;
+
+    @Override
+    public int addTitleType(Activity activity) {
+//        ActivityExample activityExample=new ActivityExample();
+        activity.setModel(1);
+        activity.setCreatetime(new Date());
+        int i = activityMapper.insert(activity);
+        System.out.println(i);
+        return i;
+    }
+}

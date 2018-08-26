@@ -1,5 +1,8 @@
 package com.slionh.funhere.controller.apiController;
 
+import com.slionh.funhere.entity.Activity;
+import com.slionh.funhere.service.ActivityServer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,16 +15,20 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 public class TitleController {
+    @Autowired
+    private ActivityServer activityServer;
 
     @RequestMapping("/titleType")
     @PostMapping
     @ResponseBody
-    public String titleType(HttpServletRequest request){
+    public String titleType(HttpServletRequest request,Activity activity){
 //        request.
-        String title=request.getParameter("title");
-        String type=request.getParameter("type");
-        System.out.println(title);
-        System.out.println(type);
+//        String title=request.getParameter("title");
+//        String type=request.getParameter("type");
+//        System.out.println(title);
+//        System.out.println(type);
+        System.out.println(activity.toString());
+        activityServer.addTitleType(activity);
         return "success";
 
     }

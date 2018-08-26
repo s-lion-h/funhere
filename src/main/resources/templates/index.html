@@ -61,13 +61,8 @@
         <div id="typeslist" style="DISPLAY: none;">
             <div class="info-title">fun here</div>
             <div class="info-content">
-                <!--<label class="btn">标题 : </label><input type="text" name="title"><br/>-->
-                <!--<div class="form-group">
-                    <label for="exampleFormControlInput1">标题</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="想玩点啥呗">
-                </div>-->
                 <div class="form-group row">
-                    <label for="activityTitle" class="col-sm-3 col-form-label"><h5>标题:</h5></label>
+                    <label id="activityLabel" for="activityTitle" class="col-sm-3 col-form-label"><h5>标题:</h5></label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="activityTitle" placeholder="想玩点啥呗">
                     </div>
@@ -96,6 +91,8 @@
         resizeEnable: true
     });
 
+    var pointlnglat;
+
     marker = new AMap.Marker({
         map: map,
         icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png',
@@ -106,6 +103,7 @@
         document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat();
         console.log(e);
         var point=[e.lnglat.getLng(),e.lnglat.getLat()];
+        pointlnglat = point;
         marker.setPosition(point);
         infowindow2.open(map,point);
         document.getElementById("typeslist").style.display="";
@@ -148,23 +146,7 @@
 
     // 获取生成types层叠
     var content3=document.getElementById("typeslist")
-    // console.log(content3)
 
-    // 列表信息框体2
-    /*var content2='<div class="info-title">在这玩</div><div class="info-content">' +
-        '<label>标题</label><input type="text" name="title"><br/>' +
-        '<h2>活动类型</h2>' +
-        '<label>飙车</label><input type="checkbox" name="yi" value="yi">' +
-        '<label>蹦迪</label><input type="checkbox" name="er" value="er">' +
-        '<label>广场舞</label><input type="checkbox" name="san" value="san">' +
-        '<br>' +
-        '<input type="submit" value="提交">' +
-        '</div>';*/
-    // 信息框体
-    /*var content='<div class="info-title">高德地图</div><div class="info-content">' +
-        '<img src="https://webapi.amap.com/images/amap.jpg">' +
-        '高德是中国领先的数字地图内容、导航和位置服务解决方案提供商。<br/>' +
-        '<a target="_blank" href = "https://mobile.amap.com/">点击下载高德地图</a></div>';*/
     var  infowindow2 = new AMap.AdvancedInfoWindow({
         content: content3,
         asOrigin: false,
@@ -172,26 +154,41 @@
         offset: new AMap.Pixel(0, -30)
     });
 
-
-    // types点击按钮active切换
-    /*$(document).ready(function(){
-        $('ul > li').click(function (e) {
-            e.preventDefault();
-            $('ul.nav > li').removeClass('active');
-            $(this).addClass('active');
-        });
-    });*/
-    
-    function pushActivity() {
+    function checkform() {
         var title=$("#activityTitle").val();
         var type=$("input[name='type']:checked").val();
+        if (title==null||title==''){
+            return 0;
+        }
+        if (type==null||type==''){
+            return 0;
+        }
+    }
+    
+    function pushActivity() {
+        if (checkform()==0) {
+            $("#activityTitle").attr('placeholder',"写点啥呗")
+            $("#activityLabel").addClass("text-danger")
+            $("#myPageTop").append("<div class=\"alert alert-warning alert-dismissible fade show\" role=\"alert\">\n" +
+                "  <strong>无效!</strong> -->要填写必要信息哦\n" +
+                "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
+                "    <span aria-hidden=\"true\">&times;</span>\n" +
+                "  </button>\n" +
+                "</div>")
+            setTimeout("$('.alert').fadeOut(2000);", 3000 )
+            return;
+        }
+
+        var title=$("#activityTitle").val();
+        var type=$("input[name='type']:checked").val();
+
         console.log(title)
         console.log(type)
 
         $.ajax({
             type : 'post',
             async : true,
-            url : '/titleType?title='+title+'&type='+type,
+            url : '/titleType?title='+title+'&type='+type+'&position='+pointlnglat,
             cache : false,
             success : function(data) {
                 // $("#calendar").html(data);

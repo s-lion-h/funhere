@@ -20,7 +20,7 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public List<Type> listType() {
-        HashMap types=new HashMap();
+//        HashMap types=new HashMap();
         TypeExample typeExample=new TypeExample();
         List<Type> list=typeMapper.selectByExample(typeExample);
 //        System.out.println(list.toString());

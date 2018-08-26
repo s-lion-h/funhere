@@ -771,6 +771,126 @@ public class ActivityExample {
             addCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }
+
+        public Criteria andModelIsNull() {
+            addCriterion("model is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelIsNotNull() {
+            addCriterion("model is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelEqualTo(Integer value) {
+            addCriterion("model =", value, "model");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelNotEqualTo(Integer value) {
+            addCriterion("model <>", value, "model");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelGreaterThan(Integer value) {
+            addCriterion("model >", value, "model");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelGreaterThanOrEqualTo(Integer value) {
+            addCriterion("model >=", value, "model");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelLessThan(Integer value) {
+            addCriterion("model <", value, "model");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelLessThanOrEqualTo(Integer value) {
+            addCriterion("model <=", value, "model");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelIn(List<Integer> values) {
+            addCriterion("model in", values, "model");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelNotIn(List<Integer> values) {
+            addCriterion("model not in", values, "model");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelBetween(Integer value1, Integer value2) {
+            addCriterion("model between", value1, value2, "model");
+            return (Criteria) this;
+        }
+
+        public Criteria andModelNotBetween(Integer value1, Integer value2) {
+            addCriterion("model not between", value1, value2, "model");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeIsNull() {
+            addCriterion("createTime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeIsNotNull() {
+            addCriterion("createTime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeEqualTo(Date value) {
+            addCriterion("createTime =", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeNotEqualTo(Date value) {
+            addCriterion("createTime <>", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeGreaterThan(Date value) {
+            addCriterion("createTime >", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("createTime >=", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeLessThan(Date value) {
+            addCriterion("createTime <", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeLessThanOrEqualTo(Date value) {
+            addCriterion("createTime <=", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeIn(List<Date> values) {
+            addCriterion("createTime in", values, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeNotIn(List<Date> values) {
+            addCriterion("createTime not in", values, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeBetween(Date value1, Date value2) {
+            addCriterion("createTime between", value1, value2, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeNotBetween(Date value1, Date value2) {
+            addCriterion("createTime not between", value1, value2, "createtime");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

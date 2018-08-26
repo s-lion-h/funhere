@@ -23,6 +23,10 @@ public class Activity {
 
     private String type;
 
+    private Integer model;
+
+    private Date createtime;
+
     private String content;
 
     public Integer getActivityid() {
@@ -105,6 +109,22 @@ public class Activity {
         this.type = type == null ? null : type.trim();
     }
 
+    public Integer getModel() {
+        return model;
+    }
+
+    public void setModel(Integer model) {
+        this.model = model;
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
+
     public String getContent() {
         return content;
     }
@@ -126,6 +146,8 @@ public class Activity {
                 ", endtime=" + endtime +
                 ", level=" + level +
                 ", type='" + type + '\'' +
+                ", model=" + model +
+                ", createtime=" + createtime +
                 ", content='" + content + '\'' +
                 '}';
     }
