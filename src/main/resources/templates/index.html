@@ -92,6 +92,7 @@
     });
 
     var pointlnglat;
+    console.log([[${types}]]);
 
     marker = new AMap.Marker({
         map: map,
@@ -147,10 +148,12 @@
     for (i=0; i < [[${activity}]].length;i++){
         var str=[[${activity}]][i].position;
         var positionXY=str.split(",");
+        var type=[[${activity}]][i].type-1;
         console.log(positionXY)
         console.log([[${activity}]][i]);
         var text2 = new AMap.Text({
-            text:[[${activity}]][i].type,
+            // text:[[${activity}]][i].type,
+            text:[[${types}]][type].name,
             textAlign:'center', // 'left' 'right', 'center',
             verticalAlign:'middle', //middle 、bottom
             // draggable:true,

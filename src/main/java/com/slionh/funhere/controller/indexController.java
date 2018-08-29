@@ -42,4 +42,11 @@ public class indexController {
         modelAndView.addObject("activity",activityServer.listAllActivity());
         return modelAndView;
     }
+
+    @RequestMapping("/addDetail")
+    public ModelAndView addDetail(HttpServletRequest request,ModelAndView modelAndView){
+        modelAndView.setViewName("addDetail");
+
+        return modelAndView;
+    }
 }

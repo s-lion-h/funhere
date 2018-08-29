@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>addDetail</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.15/vue.js"></script>
+    <script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script>
+</head>
+<body>
+    <el-col :span="12" :offset="6">
+        <div class="grid-content bg-purple">
+            <h1>登记活动</h1>
+            <el-form ref="form" :model="form" label-width="80px">
+                <el-form-item label="活动名称">
+                    <el-input placeholder="活动名称" v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item label="活动区域">
+                    <el-select v-model="form.country" placeholder="国家">
+                        <el-option label="中国" value="shanghai"></el-option>
+                        <el-option label="美国" value="beijing"></el-option>
+                        <el-option label="其他" value="beijing"></el-option>
+                    </el-select>
+                    <el-select v-model="form.province" placeholder="省份">
+                        <el-option label="广东" value="shanghai"></el-option>
+                        <el-option label="北京" value="beijing"></el-option>
+                        <el-option label="其他" value="beijing"></el-option>
+                    </el-select>
+                    <el-select v-model="form.city" placeholder="市县">
+                        <el-option label="广州" value="shanghai"></el-option>
+                        <el-option label="顺德" value="beijing"></el-option>
+                        <el-option label="其他" value="beijing"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-input placeholder="具体地点" v-model="form.area">
+                        <template slot="prepend">具体地点</template>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="活动时间">
+                    <el-col :span="11">
+                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                    </el-col>
+                    <el-col class="line" :span="2">-</el-col>
+                    <el-col :span="11">
+                        <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
+                    </el-col>
+                </el-form-item>
+                <el-form-item label="活动人数">
+                    <el-radio-group v-model="form.amount">
+                        <el-radio-button label="5人以下"></el-radio-button>
+                        <el-radio-button label="6-15人"></el-radio-button>
+                        <el-radio-button label="16-50人"></el-radio-button>
+                        <el-radio-button label="51以上"></el-radio-button>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="活动类型">
+                    <el-checkbox-group v-model="form.type">
+                        <el-checkbox v-for="(type,key) in form.types" :key="key" :label="type.name" :value="type.typeid"></el-checkbox>
+                    </el-checkbox-group>
+                    <el-input placeholder="请注明活动类型" v-model="form.other">
+                        <template slot="prepend">其他</template>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="活动简介">
+                    <el-input type="textarea" placeholder="介绍下活动呗" v-model="form.desc" :autosize="{ minRows: 4, maxRows: 8}"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="getData">立即创建</el-button>
+                    <el-button>取消</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+    </el-col>
+
+<script>
+    var form: {
+        name: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: '',
+        // types: [{"typeid":1,"name":"蹦迪"},{"typeid":2,"name":"吃饭"},{"typeid":3,"name":"广场舞"},{"typeid":4,"name":"吹水"},{"typeid":5,"name":"兜风"},{"typeid":6,"name":"散步"}],
+        types: [],
+        country: '',
+        province: '',
+        city: '',
+        amount: '',
+        other: '',
+        area: ''
+    }
+</script>
+
+</body>
+</html>
