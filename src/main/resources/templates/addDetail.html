@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>addDetail</title>
-    <script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.js"></script>
-    <script src="https://cdn.bootcss.com/vue/2.5.15/vue.js"></script>
-    <script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script>
+    <!--<script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.js"></script>-->
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
 </head>
 <body>
+<div id="app">
     <el-col :span="12" :offset="6">
         <div class="grid-content bg-purple">
             <h1>登记活动</h1>
@@ -72,26 +75,106 @@
             </el-form>
         </div>
     </el-col>
-
+</div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    var form: {
-        name: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: '',
-        // types: [{"typeid":1,"name":"蹦迪"},{"typeid":2,"name":"吃饭"},{"typeid":3,"name":"广场舞"},{"typeid":4,"name":"吹水"},{"typeid":5,"name":"兜风"},{"typeid":6,"name":"散步"}],
-        types: [],
-        country: '',
-        province: '',
-        city: '',
-        amount: '',
-        other: '',
-        area: ''
+new Vue({
+    el: '#app',
+    /*data: function() {
+        var form = {
+            name: '',
+            date1: '',
+            date2: '',
+            delivery: false,
+            type: [],
+            resource: '',
+            desc: '',
+            // types: [{"typeid":1,"name":"蹦迪"},{"typeid":2,"name":"吃饭"},{"typeid":3,"name":"广场舞"},{"typeid":4,"name":"吹水"},{"typeid":5,"name":"兜风"},{"typeid":6,"name":"散步"}],
+            types: [],
+            country: '',
+            province: '',
+            city: '',
+            amount: '',
+            other: '',
+            area: ''
+        }
+        return { form }
+    }*/
+    data() {
+        return {
+            form: {
+                name: '',
+                date1: '',
+                date2: '',
+                delivery: false,
+                type: [],
+                resource: '',
+                desc: '',
+                // types: [{"typeid":1,"name":"蹦迪"},{"typeid":2,"name":"吃饭"},{"typeid":3,"name":"广场舞"},{"typeid":4,"name":"吹水"},{"typeid":5,"name":"兜风"},{"typeid":6,"name":"散步"}],
+                types: [],
+                country: '',
+                province: '',
+                city: '',
+                amount: '',
+                other: '',
+                area: ''
+            }
+        }
+    },
+    created: function () {
+        let self = this
+        console.log('初始化本页')
+        axios.post('http://localhost:8080/getForm', {}, {
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            withCredentials: true
+        }).then(function (response) {
+            // 这里是处理正确的回调
+            console.log('reponse.data : ')
+            console.log(response.data)
+            // sessionStorage.axiosData = response.data
+            // self.axiosData = response.data
+            self.form.types = response.data.types
+            self.form.date1 = response.data.todayDate
+            self.form.date2 = response.data.suggestTime
+        }).catch(function (response) {
+            // 这里是处理错误的回调
+            console.log('错误')
+            console.log(response)
+        })
+    },
+    methods: {
+        getData: function () {
+            let self = this
+            var token = localStorage.getItem('token')
+            console.log('开始获取数据')
+            axios.post('http://localhost:8080/', {}, {
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'Authorization': 'Bearer ' + token
+                },
+                withCredentials: true
+            }).then(function (response) {
+                // 这里是处理正确的回调
+                // console.log('response : ' + response)
+                console.log('reponse.data : ')
+                console.log(response.data)
+                // sessionStorage.axiosData = response.data
+                self.axiosData = response.data
+            }).catch(function (response) {
+                // 这里是处理错误的回调
+                console.log('错误')
+                console.log(response)
+            })
+        }
     }
+})
 </script>
 
-</body>
 </html>

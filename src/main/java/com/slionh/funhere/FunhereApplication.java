@@ -48,7 +48,7 @@ public class FunhereApplication {
     }
 
 //    跨域
-    @Bean
+   /* @Bean
     public FilterRegistrationBean corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
@@ -60,7 +60,7 @@ public class FunhereApplication {
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
         bean.setOrder(0);
         return bean;
-    }
+    }*/
 
     public static void main(String[] args) {
         SpringApplication.run(FunhereApplication.class, args);
