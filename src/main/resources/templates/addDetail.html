@@ -51,17 +51,20 @@
                 </el-form-item>
                 <el-form-item label="活动人数">
                     <el-radio-group v-model="form.amount">
-                        <el-radio-button label="5人以下"></el-radio-button>
-                        <el-radio-button label="6-15人"></el-radio-button>
-                        <el-radio-button label="16-50人"></el-radio-button>
-                        <el-radio-button label="51以上"></el-radio-button>
+                        <el-radio-button label="1" >5人以下</el-radio-button>
+                        <el-radio-button label="2">6-15人</el-radio-button>
+                        <el-radio-button label="3">16-50人</el-radio-button>
+                        <el-radio-button label="4">51以上</el-radio-button>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="活动类型">
-                    <el-checkbox-group v-model="form.type">
+                    <!--<el-checkbox-group v-model="form.type">
                         <el-checkbox v-for="(type,key) in form.types" :key="key" :label="type.name" :value="type.typeid"></el-checkbox>
-                    </el-checkbox-group>
-                    <el-input placeholder="请注明活动类型" v-model="form.other">
+                    </el-checkbox-group>-->
+                    <el-radio-group v-model="form.type">
+                        <el-radio v-for="(type,key) in form.types" :key="key" :label="type.typeid" @change="checkOther">{{type.name}}</el-radio>
+                    </el-radio-group>
+                    <el-input placeholder="请注明活动类型" v-model="form.other" :disabled="form.isdisable">
                         <template slot="prepend">其他</template>
                     </el-input>
                 </el-form-item>
@@ -83,28 +86,19 @@
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+function getQueryVariable(variable)
+{
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+        var pair = vars[i].split("=");
+        if(pair[0] == variable){return pair[1];}
+    }
+    return(false);
+}
+
 new Vue({
     el: '#app',
-    /*data: function() {
-        var form = {
-            name: '',
-            date1: '',
-            date2: '',
-            delivery: false,
-            type: [],
-            resource: '',
-            desc: '',
-            // types: [{"typeid":1,"name":"蹦迪"},{"typeid":2,"name":"吃饭"},{"typeid":3,"name":"广场舞"},{"typeid":4,"name":"吹水"},{"typeid":5,"name":"兜风"},{"typeid":6,"name":"散步"}],
-            types: [],
-            country: '',
-            province: '',
-            city: '',
-            amount: '',
-            other: '',
-            area: ''
-        }
-        return { form }
-    }*/
     data() {
         return {
             form: {
@@ -122,21 +116,23 @@ new Vue({
                 city: '',
                 amount: '',
                 other: '',
-                area: ''
+                area: '',
+                isdisable:false
             }
         }
     },
     created: function () {
         let self = this
         console.log('初始化本页')
+        // 初始化表单
         axios.post('http://localhost:8080/getForm', {}, {
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
-            withCredentials: true
+            withCredentials: false
         }).then(function (response) {
             // 这里是处理正确的回调
-            console.log('reponse.data : ')
+            console.log('Base form response.data : ')
             console.log(response.data)
             // sessionStorage.axiosData = response.data
             // self.axiosData = response.data
@@ -148,11 +144,30 @@ new Vue({
             console.log('错误')
             console.log(response)
         })
+        // 初始化activity内容
+        axios.post('http://localhost:8080/getActivityDetail', {activityid:getQueryVariable("activity")}, {
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            withCredentials: false
+        }).then(function (response) {
+            // 这里是处理正确的回调
+            console.log('Activity response.data : ')
+            console.log(response.data)
+            self.form.name = response.data.title
+            self.form.area = response.data.position
+            self.form.type = parseInt(response.data.type)
+            self.checkOther(parseInt(response.data.type))
+        }).catch(function (response) {
+            // 这里是处理错误的回调
+            console.log('错误')
+            console.log(response)
+        })
     },
     methods: {
         getData: function () {
             let self = this
-            var token = localStorage.getItem('token')
+            /*var token = localStorage.getItem('token')
             console.log('开始获取数据')
             axios.post('http://localhost:8080/', {}, {
                 headers: {
@@ -163,7 +178,7 @@ new Vue({
             }).then(function (response) {
                 // 这里是处理正确的回调
                 // console.log('response : ' + response)
-                console.log('reponse.data : ')
+                console.log('Submit response.data : ')
                 console.log(response.data)
                 // sessionStorage.axiosData = response.data
                 self.axiosData = response.data
@@ -171,7 +186,17 @@ new Vue({
                 // 这里是处理错误的回调
                 console.log('错误')
                 console.log(response)
-            })
+            })*/
+            console.log(self.form)
+        },
+        checkOther(data){
+            console.log(data)
+            if (data==7){
+                this.form.isdisable=false
+            }else{
+                this.form.isdisable=true
+
+            }
         }
     }
 })

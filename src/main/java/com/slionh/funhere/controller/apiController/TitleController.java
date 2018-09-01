@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /*
  * Create by s lion h on 2018/8/26
@@ -21,15 +23,19 @@ public class TitleController {
     @RequestMapping("/titleType")
     @PostMapping
     @ResponseBody
-    public String titleType(HttpServletRequest request,Activity activity){
+    public HashMap titleType(HttpServletRequest request,Activity activity){
 //        request.
 //        String title=request.getParameter("title");
 //        String type=request.getParameter("type");
 //        System.out.println(title);
 //        System.out.println(type);
         System.out.println(activity.toString());
-        activityServer.addTitleType(activity);
-        return "success";
+        int activityId=activityServer.addTitleType(activity);
+        HashMap message=new HashMap();
+        message.put("status","success");
+        message.put("activityId",activityId);
+        return message;
+//        return "success";
 
     }
 }

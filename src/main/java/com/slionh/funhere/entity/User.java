@@ -92,19 +92,4 @@ public class User {
     public void setIntroduction(String introduction) {
         this.introduction = introduction == null ? null : introduction.trim();
     }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userid=" + userid +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", registtime=" + registtime +
-                ", level=" + level +
-                ", head='" + head + '\'' +
-                ", birthday=" + birthday +
-                ", browse=" + browse +
-                ", introduction='" + introduction + '\'' +
-                '}';
-    }
 }

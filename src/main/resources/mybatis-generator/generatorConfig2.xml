@@ -43,8 +43,14 @@
         </javaClientGenerator>
 
         <!--<table schema="smarketdb" tableName="category"/>-->
-        <table schema="funhere" tableName="user"/>
-        <table schema="funhere" tableName="type"/>
-        <table schema="funhere" tableName="activity"/>
+        <table schema="funhere" tableName="user">
+            <generatedKey column="userId" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table schema="funhere" tableName="type">
+            <generatedKey column="typeId" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table schema="funhere" tableName="activity">
+            <generatedKey column="activityId" sqlStatement="Mysql" identity="true"/>
+        </table>
     </context>
 </generatorConfiguration>

@@ -44,7 +44,8 @@ public class indexController {
     }
 
     @RequestMapping("/addDetail")
-    public ModelAndView addDetail(HttpServletRequest request,ModelAndView modelAndView){
+    public ModelAndView addDetail(HttpServletRequest request,ModelAndView modelAndView,int activity){
+        System.out.println(activity);
         modelAndView.setViewName("addDetail");
 
         return modelAndView;

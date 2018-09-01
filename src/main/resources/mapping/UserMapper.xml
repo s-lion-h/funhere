@@ -127,21 +127,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.slionh.funhere.entity.User" >
-    insert into user (userId, username, password, 
-      registTime, level, head, 
-      birthday, browse, introduction
-      )
-    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{registtime,jdbcType=TIMESTAMP}, #{level,jdbcType=INTEGER}, #{head,jdbcType=VARCHAR}, 
-      #{birthday,jdbcType=DATE}, #{browse,jdbcType=INTEGER}, #{introduction,jdbcType=LONGVARCHAR}
-      )
+    <selectKey resultType="java.lang.Integer" keyProperty="userid" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user (username, password, registTime, 
+      level, head, birthday, 
+      browse, introduction)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{registtime,jdbcType=TIMESTAMP}, 
+      #{level,jdbcType=INTEGER}, #{head,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
+      #{browse,jdbcType=INTEGER}, #{introduction,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.slionh.funhere.entity.User" >
+    <selectKey resultType="java.lang.Integer" keyProperty="userid" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="userid != null" >
-        userId,
-      </if>
       <if test="username != null" >
         username,
       </if>
@@ -168,9 +169,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="userid != null" >
-        #{userid,jdbcType=INTEGER},
-      </if>
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
       </if>

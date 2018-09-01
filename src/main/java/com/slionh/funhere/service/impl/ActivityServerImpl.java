@@ -26,8 +26,9 @@ public class ActivityServerImpl implements ActivityServer {
         activity.setModel(1);
         activity.setCreatetime(new Date());
         int i = activityMapper.insert(activity);
-        System.out.println(i);
-        return i;
+        System.out.println("activity id : " +activity.getActivityid());
+//        System.out.println(i);
+        return activity.getActivityid();
     }
 
     @Override
@@ -36,5 +37,14 @@ public class ActivityServerImpl implements ActivityServer {
         List<Activity> list=activityMapper.selectByExample(activityExample);
         System.out.println(list.toString());
         return list;
+    }
+
+    @Override
+    public Activity getActivityDetail(int activityId) {
+//        ActivityExample activityExample=new ActivityExample();
+//        activityExample.createCriteria().andActivityidEqualTo(activityId);
+        Activity activity= activityMapper.selectByPrimaryKey(activityId);
+        System.out.println(activity.toString());
+        return activity;
     }
 }

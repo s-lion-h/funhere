@@ -132,23 +132,26 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.slionh.funhere.entity.Activity" >
-    insert into activity (activityId, title, userId, 
-      amount, positionName, position, 
-      startTime, endTime, level, 
-      type, model, createTime, 
-      content)
-    values (#{activityid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, 
-      #{amount,jdbcType=INTEGER}, #{positionname,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, 
-      #{starttime,jdbcType=DATE}, #{endtime,jdbcType=DATE}, #{level,jdbcType=INTEGER}, 
-      #{type,jdbcType=VARCHAR}, #{model,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{content,jdbcType=LONGVARCHAR})
+    <selectKey resultType="java.lang.Integer" keyProperty="activityid" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into activity (title, userId, amount, 
+      positionName, position, startTime, 
+      endTime, level, type, 
+      model, createTime, content
+      )
+    values (#{title,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, #{amount,jdbcType=INTEGER}, 
+      #{positionname,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{starttime,jdbcType=DATE}, 
+      #{endtime,jdbcType=DATE}, #{level,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
+      #{model,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.slionh.funhere.entity.Activity" >
+    <selectKey resultType="java.lang.Integer" keyProperty="activityid" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into activity
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="activityid != null" >
-        activityId,
-      </if>
       <if test="title != null" >
         title,
       </if>
@@ -187,9 +190,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="activityid != null" >
-        #{activityid,jdbcType=INTEGER},
-      </if>
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
       </if>
