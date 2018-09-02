@@ -18,20 +18,20 @@
             <h1>登记活动</h1>
             <el-form ref="form" :model="form" label-width="80px">
                 <el-form-item label="活动名称">
-                    <el-input placeholder="活动名称" v-model="form.name"></el-input>
+                    <el-input placeholder="活动名称" v-model="form.title"></el-input>
                 </el-form-item>
                 <el-form-item label="位置名称">
-                    <el-input placeholder="位置名称" v-model="form.areaName">
+                    <el-input placeholder="位置名称" v-model="form.positionname">
                     </el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-input placeholder="经纬度" v-model="form.area">
+                    <el-input placeholder="经纬度" v-model="form.position">
                         <template slot="prepend">经纬度</template>
                     </el-input>
                 </el-form-item>
                 <el-form-item label="活动时间">
                     <el-col :span="11">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                        <el-date-picker type="date" placeholder="选择日期" v-model="form.starttime" style="width: 100%;"></el-date-picker>
                     </el-col>
                     <el-col class="line" :span="2">-</el-col>
                     <el-col :span="11">
@@ -58,7 +58,7 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item label="活动简介">
-                    <el-input type="textarea" placeholder="介绍下活动呗" v-model="form.desc" :autosize="{ minRows: 4, maxRows: 8}"></el-input>
+                    <el-input type="textarea" placeholder="介绍下活动呗" v-model="form.content" :autosize="{ minRows: 4, maxRows: 8}"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getData">立即创建</el-button>
@@ -91,23 +91,24 @@ new Vue({
     data() {
         return {
             form: {
-                name: '',
-                date1: '',
+                title: '',
+                starttime: '',
                 date2: '',
-                delivery: false,
+                // delivery: false,
                 type: [],
-                resource: '',
-                desc: '',
+                // resource: '',
+                // desc: '',
                 // types: [{"typeid":1,"name":"蹦迪"},{"typeid":2,"name":"吃饭"},{"typeid":3,"name":"广场舞"},{"typeid":4,"name":"吹水"},{"typeid":5,"name":"兜风"},{"typeid":6,"name":"散步"}],
                 types: [],
-                country: '',
-                province: '',
-                city: '',
-                amount: '',
+                // country: '',
+                // province: '',
+                // city: '',
+                amount: '1',
                 other: '',
-                areaName: '',
-                area: '',
-                isdisable:false
+                positionname: '',
+                position: '',
+                isdisable:false,
+                content: ''
             }
         }
     },
@@ -127,7 +128,7 @@ new Vue({
             // sessionStorage.axiosData = response.data
             // self.axiosData = response.data
             self.form.types = response.data.types
-            self.form.date1 = response.data.todayDate
+            self.form.starttime = response.data.todayDate
             self.form.date2 = response.data.suggestTime
         }).catch(function (response) {
             // 这里是处理错误的回调
@@ -145,15 +146,15 @@ new Vue({
             // 这里是处理正确的回调
             console.log('Activity response.data : ')
             console.log(response.data)
-            self.form.name = response.data.title
-            self.form.area = response.data.position
+            self.form.title = response.data.title
+            self.form.position = response.data.position
             self.form.type = parseInt(response.data.type)
             self.checkOther(parseInt(response.data.type))
             // var out = reCoder(response.data.position)
             // console.log(out)
             // console.log(loca)
             // console.log(regeocoder(response.data.position))
-            // self.form.areaName = regeocoder(response.data.position)
+            // self.form.positionname = regeocoder(response.data.position)
             var geocoder = new AMap.Geocoder({
                 radius: 1000,
                 extensions: "all"
@@ -162,7 +163,7 @@ new Vue({
                 if (status === 'complete' && result.info === 'OK') {
                     // return geocoder_CallBack(result);
                     console.log(result.regeocode.formattedAddress)
-                    self.form.areaName=result.regeocode.formattedAddress
+                    self.form.positionname=result.regeocode.formattedAddress
                     // location = result.regeocode.formattedAddress.toString();
                     // return result.regeocode.formattedAddress;
                 }
@@ -176,27 +177,25 @@ new Vue({
     methods: {
         getData: function () {
             let self = this
-            /*var token = localStorage.getItem('token')
-            console.log('开始获取数据')
-            axios.post('http://localhost:8080/', {}, {
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8',
-                    'Authorization': 'Bearer ' + token
-                },
-                withCredentials: true
-            }).then(function (response) {
-                // 这里是处理正确的回调
-                // console.log('response : ' + response)
-                console.log('Submit response.data : ')
-                console.log(response.data)
-                // sessionStorage.axiosData = response.data
-                self.axiosData = response.data
-            }).catch(function (response) {
-                // 这里是处理错误的回调
-                console.log('错误')
-                console.log(response)
-            })*/
             console.log(self.form)
+            axios({
+                method:'post',
+                url:'http://localhost:8080/postMsg',
+                data:{
+                    // form : self.form
+                    activityid:getQueryVariable("activity"),
+                    title:self.form.title,
+                    position:self.form.position,
+                    positionname:self.form.positionname,
+                    starttime:self.form.starttime,
+                    type:self.form.type,
+                    other:self.form.other,
+                    content:self.form.content,
+                    amount:self.form.amount
+                }
+            }).then(function (response) {
+                console.log(response.data)
+            })
         },
         checkOther(data){
             // console.log(data)

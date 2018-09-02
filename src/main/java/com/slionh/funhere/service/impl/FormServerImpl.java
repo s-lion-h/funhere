@@ -46,4 +46,10 @@ public class FormServerImpl implements FormServer {
     public String getSuggestTime() {
         return "15:00:00";
     }
+
+//    解析提交表单
+    @Override
+    public void resolveFormActivity(HashMap map) {
+
+    }
 }

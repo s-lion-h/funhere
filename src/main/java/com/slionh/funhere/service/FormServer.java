@@ -13,4 +13,5 @@ public interface FormServer {
     List<Type> listFormType();
     String getTodayDate();
     String getSuggestTime();
+    void resolveFormActivity(HashMap map);
 }
