@@ -6,6 +6,8 @@
     <!--<script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.js"></script>-->
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=2b35126bc659f27d0df08adab38be5bc&plugin=AMap.AdvancedInfoWindow,AMap.Autocomplete,AMap.Geocoder"></script>
+
     <!-- 引入组件库 -->
     <!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
 </head>
@@ -18,26 +20,13 @@
                 <el-form-item label="活动名称">
                     <el-input placeholder="活动名称" v-model="form.name"></el-input>
                 </el-form-item>
-                <el-form-item label="活动区域">
-                    <el-select v-model="form.country" placeholder="国家">
-                        <el-option label="中国" value="shanghai"></el-option>
-                        <el-option label="美国" value="beijing"></el-option>
-                        <el-option label="其他" value="beijing"></el-option>
-                    </el-select>
-                    <el-select v-model="form.province" placeholder="省份">
-                        <el-option label="广东" value="shanghai"></el-option>
-                        <el-option label="北京" value="beijing"></el-option>
-                        <el-option label="其他" value="beijing"></el-option>
-                    </el-select>
-                    <el-select v-model="form.city" placeholder="市县">
-                        <el-option label="广州" value="shanghai"></el-option>
-                        <el-option label="顺德" value="beijing"></el-option>
-                        <el-option label="其他" value="beijing"></el-option>
-                    </el-select>
+                <el-form-item label="位置名称">
+                    <el-input placeholder="位置名称" v-model="form.areaName">
+                    </el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-input placeholder="具体地点" v-model="form.area">
-                        <template slot="prepend">具体地点</template>
+                    <el-input placeholder="经纬度" v-model="form.area">
+                        <template slot="prepend">经纬度</template>
                     </el-input>
                 </el-form-item>
                 <el-form-item label="活动时间">
@@ -116,6 +105,7 @@ new Vue({
                 city: '',
                 amount: '',
                 other: '',
+                areaName: '',
                 area: '',
                 isdisable:false
             }
@@ -144,6 +134,7 @@ new Vue({
             console.log('错误')
             console.log(response)
         })
+
         // 初始化activity内容
         axios.post('http://localhost:8080/getActivityDetail', {activityid:getQueryVariable("activity")}, {
             headers: {
@@ -158,6 +149,24 @@ new Vue({
             self.form.area = response.data.position
             self.form.type = parseInt(response.data.type)
             self.checkOther(parseInt(response.data.type))
+            // var out = reCoder(response.data.position)
+            // console.log(out)
+            // console.log(loca)
+            // console.log(regeocoder(response.data.position))
+            // self.form.areaName = regeocoder(response.data.position)
+            var geocoder = new AMap.Geocoder({
+                radius: 1000,
+                extensions: "all"
+            });
+            geocoder.getAddress(response.data.position, function(status, result) {
+                if (status === 'complete' && result.info === 'OK') {
+                    // return geocoder_CallBack(result);
+                    console.log(result.regeocode.formattedAddress)
+                    self.form.areaName=result.regeocode.formattedAddress
+                    // location = result.regeocode.formattedAddress.toString();
+                    // return result.regeocode.formattedAddress;
+                }
+            });
         }).catch(function (response) {
             // 这里是处理错误的回调
             console.log('错误')
@@ -190,7 +199,7 @@ new Vue({
             console.log(self.form)
         },
         checkOther(data){
-            console.log(data)
+            // console.log(data)
             if (data==7){
                 this.form.isdisable=false
             }else{
@@ -201,5 +210,31 @@ new Vue({
     }
 })
 </script>
-
+<script>
+    /*var address
+    // lnglatXY = [116.396574, 39.992706]; //已知点坐标
+    function regeocoder(lnglat) {  //逆地理编码
+        // var location
+        var geocoder = new AMap.Geocoder({
+            radius: 1000,
+            extensions: "all"
+        });
+        geocoder.getAddress(lnglat, function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+                // return geocoder_CallBack(result);
+                console.log(result.regeocode.formattedAddress)
+                address=result.regeocode.formattedAddress
+                // location = result.regeocode.formattedAddress.toString();
+                // return result.regeocode.formattedAddress;
+            }
+        });
+        return address
+    }*/
+    /*function geocoder_CallBack(data) {
+        var address = data.regeocode.formattedAddress; //返回地址描述
+        // document.getElementById("result").innerHTML = address;
+        console.log(address)
+        return address;
+    }*/
+</script>
 </html>
