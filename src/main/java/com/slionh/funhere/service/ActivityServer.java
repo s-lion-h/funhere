@@ -11,4 +11,5 @@ public interface ActivityServer {
     int addTitleType(Activity activity);
     List<Activity> listAllActivity();
     Activity getActivityDetail(int activityId);
+    int insertDetailActivity(Activity activity);
 }

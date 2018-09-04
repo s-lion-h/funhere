@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /*
@@ -24,6 +25,8 @@ public class TitleController {
     @PostMapping
     @ResponseBody
     public HashMap titleType(HttpServletRequest request,Activity activity){
+        if(activity.getCreatetime()==null||activity.getCreatetime().equals(""))
+            activity.setCreatetime(new Date());
 //        request.
 //        String title=request.getParameter("title");
 //        String type=request.getParameter("type");

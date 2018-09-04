@@ -47,4 +47,13 @@ public class ActivityServerImpl implements ActivityServer {
         System.out.println(activity.toString());
         return activity;
     }
+
+    @Override
+    public int insertDetailActivity(Activity activity) {
+        activity.setModel(2);
+        int i = activityMapper.updateByPrimaryKeySelective(activity);
+        System.out.println("activity id : " +activity.getActivityid());
+
+        return activity.getActivityid();
+    }
 }
