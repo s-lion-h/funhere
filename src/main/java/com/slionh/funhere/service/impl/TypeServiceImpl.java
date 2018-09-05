@@ -7,7 +7,6 @@ import com.slionh.funhere.service.TypeService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
 
 /*

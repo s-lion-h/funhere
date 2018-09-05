@@ -20,4 +20,12 @@ public class Type {
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Type{" +
+                "typeid=" + typeid +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

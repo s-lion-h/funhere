@@ -36,7 +36,7 @@
                     <el-col class="line" :span="1">---</el-col>
                     <el-col :span="8">
                         <!--<el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>-->
-                        <el-time-select v-model="form.date2" :picker-options="{start: '06:00',step: '00:30',end: '24:00'}" placeholder="选择时间"></el-time-select>
+                        <el-time-select v-model="form.date2" :picker-options="{start: '00:00',step: '00:15',end: '24:00'}" placeholder="选择时间"></el-time-select>
                     </el-col>
                 </el-form-item>
                 <el-form-item label="活动人数">
@@ -95,15 +95,8 @@ new Vue({
                 title: '',
                 starttime: '',
                 date2: '',
-                // delivery: false,
                 type: [],
-                // resource: '',
-                // desc: '',
-                // types: [{"typeid":1,"name":"蹦迪"},{"typeid":2,"name":"吃饭"},{"typeid":3,"name":"广场舞"},{"typeid":4,"name":"吹水"},{"typeid":5,"name":"兜风"},{"typeid":6,"name":"散步"}],
                 types: [],
-                // country: '',
-                // province: '',
-                // city: '',
                 amount: '1',
                 other: '',
                 positionname: '',
@@ -188,7 +181,9 @@ new Vue({
                     title:self.form.title,
                     position:self.form.position,
                     positionname:self.form.positionname,
-                    starttime:self.form.starttime+'T'+self.form.date2,
+                    starttime:self.form.starttime+'T'+self.form.date2+'+0800',
+                    // starttime:self.form.date2,
+                    // starttime:self.form.starttime+'T'+self.form.date2,
                     type:self.form.type,
                     other:self.form.other,
                     content:self.form.content,
@@ -206,6 +201,9 @@ new Vue({
                 this.form.isdisable=true
 
             }
+        },
+        formcheck(){
+            if () 
         }
     }
 })

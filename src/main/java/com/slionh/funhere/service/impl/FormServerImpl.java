@@ -44,7 +44,7 @@ public class FormServerImpl implements FormServer {
 //    获取建议时间
     @Override
     public String getSuggestTime() {
-        return "15:00:00";
+        return "12:00";
     }
 
 //    解析提交表单

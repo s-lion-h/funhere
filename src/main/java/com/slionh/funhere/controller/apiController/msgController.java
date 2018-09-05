@@ -1,5 +1,6 @@
 package com.slionh.funhere.controller.apiController;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.slionh.funhere.entity.Activity;
 import com.slionh.funhere.service.ActivityServer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class msgController {
 
     @RequestMapping("/postMsg")
     @ResponseBody
-    public void postMsg(@RequestBody Activity activity){
+    public void postMsg(@RequestBody @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8") Activity activity){
         System.out.println("postMsg : "+activity.toString());
         activityServer.insertDetailActivity(activity);
 //        System.out.println("postMap : "+map);

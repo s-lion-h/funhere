@@ -8,7 +8,7 @@
     <result column="amount" property="amount" jdbcType="INTEGER" />
     <result column="positionName" property="positionname" jdbcType="VARCHAR" />
     <result column="position" property="position" jdbcType="VARCHAR" />
-    <result column="startTime" property="starttime" jdbcType="DATE" />
+    <result column="startTime" property="starttime" jdbcType="TIMESTAMP" />
     <result column="endTime" property="endtime" jdbcType="DATE" />
     <result column="level" property="level" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="VARCHAR" />
@@ -141,7 +141,7 @@
       model, createTime, content
       )
     values (#{title,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, #{amount,jdbcType=INTEGER}, 
-      #{positionname,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{starttime,jdbcType=DATE}, 
+      #{positionname,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{starttime,jdbcType=TIMESTAMP}, 
       #{endtime,jdbcType=DATE}, #{level,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
       #{model,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
       )
@@ -206,7 +206,7 @@
         #{position,jdbcType=VARCHAR},
       </if>
       <if test="starttime != null" >
-        #{starttime,jdbcType=DATE},
+        #{starttime,jdbcType=TIMESTAMP},
       </if>
       <if test="endtime != null" >
         #{endtime,jdbcType=DATE},
@@ -256,7 +256,7 @@
         position = #{record.position,jdbcType=VARCHAR},
       </if>
       <if test="record.starttime != null" >
-        startTime = #{record.starttime,jdbcType=DATE},
+        startTime = #{record.starttime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.endtime != null" >
         endTime = #{record.endtime,jdbcType=DATE},
@@ -289,7 +289,7 @@
       amount = #{record.amount,jdbcType=INTEGER},
       positionName = #{record.positionname,jdbcType=VARCHAR},
       position = #{record.position,jdbcType=VARCHAR},
-      startTime = #{record.starttime,jdbcType=DATE},
+      startTime = #{record.starttime,jdbcType=TIMESTAMP},
       endTime = #{record.endtime,jdbcType=DATE},
       level = #{record.level,jdbcType=INTEGER},
       type = #{record.type,jdbcType=VARCHAR},
@@ -308,7 +308,7 @@
       amount = #{record.amount,jdbcType=INTEGER},
       positionName = #{record.positionname,jdbcType=VARCHAR},
       position = #{record.position,jdbcType=VARCHAR},
-      startTime = #{record.starttime,jdbcType=DATE},
+      startTime = #{record.starttime,jdbcType=TIMESTAMP},
       endTime = #{record.endtime,jdbcType=DATE},
       level = #{record.level,jdbcType=INTEGER},
       type = #{record.type,jdbcType=VARCHAR},
@@ -337,7 +337,7 @@
         position = #{position,jdbcType=VARCHAR},
       </if>
       <if test="starttime != null" >
-        startTime = #{starttime,jdbcType=DATE},
+        startTime = #{starttime,jdbcType=TIMESTAMP},
       </if>
       <if test="endtime != null" >
         endTime = #{endtime,jdbcType=DATE},
@@ -367,7 +367,7 @@
       amount = #{amount,jdbcType=INTEGER},
       positionName = #{positionname,jdbcType=VARCHAR},
       position = #{position,jdbcType=VARCHAR},
-      startTime = #{starttime,jdbcType=DATE},
+      startTime = #{starttime,jdbcType=TIMESTAMP},
       endTime = #{endtime,jdbcType=DATE},
       level = #{level,jdbcType=INTEGER},
       type = #{type,jdbcType=VARCHAR},
@@ -383,7 +383,7 @@
       amount = #{amount,jdbcType=INTEGER},
       positionName = #{positionname,jdbcType=VARCHAR},
       position = #{position,jdbcType=VARCHAR},
-      startTime = #{starttime,jdbcType=DATE},
+      startTime = #{starttime,jdbcType=TIMESTAMP},
       endTime = #{endtime,jdbcType=DATE},
       level = #{level,jdbcType=INTEGER},
       type = #{type,jdbcType=VARCHAR},

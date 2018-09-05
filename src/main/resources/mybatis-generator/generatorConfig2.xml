@@ -51,6 +51,7 @@
         </table>
         <table schema="funhere" tableName="activity">
             <generatedKey column="activityId" sqlStatement="Mysql" identity="true"/>
+            <columnOverride column="startTime" jdbcType="TIMESTAMP"/>
         </table>
     </context>
 </generatorConfiguration>

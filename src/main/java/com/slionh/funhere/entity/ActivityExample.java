@@ -533,52 +533,52 @@ public class ActivityExample {
         }
 
         public Criteria andStarttimeEqualTo(Date value) {
-            addCriterionForJDBCDate("startTime =", value, "starttime");
+            addCriterion("startTime =", value, "starttime");
             return (Criteria) this;
         }
 
         public Criteria andStarttimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("startTime <>", value, "starttime");
+            addCriterion("startTime <>", value, "starttime");
             return (Criteria) this;
         }
 
         public Criteria andStarttimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("startTime >", value, "starttime");
+            addCriterion("startTime >", value, "starttime");
             return (Criteria) this;
         }
 
         public Criteria andStarttimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("startTime >=", value, "starttime");
+            addCriterion("startTime >=", value, "starttime");
             return (Criteria) this;
         }
 
         public Criteria andStarttimeLessThan(Date value) {
-            addCriterionForJDBCDate("startTime <", value, "starttime");
+            addCriterion("startTime <", value, "starttime");
             return (Criteria) this;
         }
 
         public Criteria andStarttimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("startTime <=", value, "starttime");
+            addCriterion("startTime <=", value, "starttime");
             return (Criteria) this;
         }
 
         public Criteria andStarttimeIn(List<Date> values) {
-            addCriterionForJDBCDate("startTime in", values, "starttime");
+            addCriterion("startTime in", values, "starttime");
             return (Criteria) this;
         }
 
         public Criteria andStarttimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("startTime not in", values, "starttime");
+            addCriterion("startTime not in", values, "starttime");
             return (Criteria) this;
         }
 
         public Criteria andStarttimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("startTime between", value1, value2, "starttime");
+            addCriterion("startTime between", value1, value2, "starttime");
             return (Criteria) this;
         }
 
         public Criteria andStarttimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("startTime not between", value1, value2, "starttime");
+            addCriterion("startTime not between", value1, value2, "starttime");
             return (Criteria) this;
         }
 
