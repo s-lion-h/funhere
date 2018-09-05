@@ -50,4 +50,14 @@ public class indexController {
 
         return modelAndView;
     }
+
+    @RequestMapping("/confirm")
+    public String toConfirm(){
+        return "confirm";
+    }
+
+    @RequestMapping("/defaultconfirm")
+    public String todefaultconfirm(){
+        return "defaultconfirm";
+    }
 }
