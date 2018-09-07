@@ -24,9 +24,14 @@ public class msgController {
 
     @RequestMapping("/postMsg")
     @ResponseBody
-    public void postMsg(@RequestBody @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8") Activity activity){
+    public String postMsg(@RequestBody @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8") Activity activity){
         System.out.println("postMsg : "+activity.toString());
-        activityServer.insertDetailActivity(activity);
+        int activityId=activityServer.insertDetailActivity(activity);
+        if (activityId!=0){
+            return "success";
+        }else{
+            return "false";
+        }
 //        System.out.println("postMap : "+map);
     }
 }

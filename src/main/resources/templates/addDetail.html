@@ -5,7 +5,8 @@
     <title>addDetail</title>
     <!--<script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.js"></script>-->
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+    <link href="https://cdn.bootcss.com/element-ui/2.4.0/theme-chalk/index.css" rel="stylesheet">
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=2b35126bc659f27d0df08adab38be5bc&plugin=AMap.AdvancedInfoWindow,AMap.Autocomplete,AMap.Geocoder"></script>
 
     <!-- 引入组件库 -->
@@ -14,7 +15,8 @@
 <body>
 <div id="app">
     <el-col :span="12" :offset="6">
-        <div class="grid-content bg-purple">
+        <div class="grid-content bg-purple" id="myPageTop">
+            <!--<el-alert title="成功提示的文案" type="success" description="文字说明文字说明文字说明文字说明文字说明文字说明" show-icon></el-alert>-->
             <h1>登记活动</h1>
             <el-form ref="form" :model="form" label-width="80px" :rules="rules"  class="demo-ruleForm">
                 <el-form-item label="活动名称">
@@ -25,7 +27,7 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-input placeholder="经纬度" v-model="form.position">
+                    <el-input placeholder="经纬度" v-model="form.position" :disabled="true">
                         <template slot="prepend">经纬度</template>
                     </el-input>
                 </el-form-item>
@@ -58,11 +60,11 @@
                         <template slot="prepend">其他</template>
                     </el-input>
                 </el-form-item>
-                <el-form-item label="活动简介" prop="desc">
+                <el-form-item label="活动简介" prop="content">
                     <el-input type="textarea" placeholder="介绍下活动呗，虽然也可以不介绍" v-model="form.content" :autosize="{ minRows: 4, maxRows: 8}"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm('form')">立即创建</el-button>
+                                    <el-button type="primary" @click="submitForm('form')">立即创建</el-button>
                     <el-button>取消</el-button>
                 </el-form-item>
             </el-form>
@@ -71,10 +73,16 @@
 </div>
 </body>
 <!-- import Vue before Element -->
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!--<script src="https://unpkg.com/vue/dist/vue.js"></script>-->
+<script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
 <!-- import JavaScript -->
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
+<script src="https://cdn.bootcss.com/element-ui/2.3.9/index.js"></script>
+<!--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
+<script src="https://cdn.bootcss.com/axios/0.18.0/axios.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.js"></script>
+<link href="https://cdn.bootcss.com/bootstrap/4.1.1/css/bootstrap.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.js"></script>
 <script>
 function getQueryVariable(variable)
 {
@@ -105,27 +113,9 @@ new Vue({
                 content: ''
             },
             rules: {
-                name: [
-                    { required: true, message: '请输入活动名称', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-                ],
-                region: [
-                    { required: true, message: '请选择活动区域', trigger: 'change' }
-                ],
-                date1: [
-                    { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-                ],
-                date2: [
-                    { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
-                ],
-                type: [
-                    { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-                ],
-                resource: [
-                    { required: true, message: '请选择活动资源', trigger: 'change' }
-                ],
-                desc: [
-                    { required: true, message: '请填写活动形式', trigger: 'blur' }
+                content: [
+                    { required: true, message: '请输入活动内容', trigger: 'blur' },
+                    { min: 3, message: '简单介绍一下吧，随手就是15字,至少也要3个字啊', trigger: 'blur' }
                 ]
             }
         }
@@ -194,17 +184,20 @@ new Vue({
     },
     methods: {
         submitForm(formName) {
+            // console.log(formName)
+            console.log("click submit")
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     // alert('submit!');
-                    getData();
+                    console.log(this)
+                    this.getData()
                 } else {
                     console.log('error submit!!');
                     return false;
                 }
             });
         },
-        getData: function () {
+        getData() {
             let self = this
             console.log(self.form)
             axios({
@@ -226,6 +219,18 @@ new Vue({
                 }
             }).then(function (response) {
                 console.log(response.data)
+                if (response.data=="success"){
+                    // alert("活动已提交")
+                    $("#myPageTop").append("<div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">\n" +
+                        "  <strong>活动已提交!</strong> 去看我的活动.--><a href='#'>在这玩</a>\n" +
+                        "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
+                        "    <span aria-hidden=\"true\">&times;</span>\n" +
+                        "  </button>\n" +
+                        "</div>")
+                    setTimeout("$('.alert').fadeOut(4000);", 4000 )
+                }else{
+                    alert("error"+response.data)
+                }
             })
         },
         checkOther(data){
