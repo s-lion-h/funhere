@@ -132,23 +132,4 @@ public class Activity {
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
-
-    @Override
-    public String toString() {
-        return "Activity{" +
-                "activityid=" + activityid +
-                ", title='" + title + '\'' +
-                ", userid=" + userid +
-                ", amount=" + amount +
-                ", positionname='" + positionname + '\'' +
-                ", position='" + position + '\'' +
-                ", starttime=" + starttime +
-                ", endtime=" + endtime +
-                ", level=" + level +
-                ", type='" + type + '\'' +
-                ", model=" + model +
-                ", createtime=" + createtime +
-                ", content='" + content + '\'' +
-                '}';
-    }
 }
