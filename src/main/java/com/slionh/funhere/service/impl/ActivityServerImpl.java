@@ -26,7 +26,7 @@ public class ActivityServerImpl implements ActivityServer {
         activity.setModel(1);
         activity.setCreatetime(new Date());
         int i = activityMapper.insert(activity);
-        System.out.println("activity id : " +activity.getActivityid());
+        System.out.println("add activity id : " +activity.getActivityid());
 //        System.out.println(i);
         return activity.getActivityid();
     }

@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.slionh.funhere.mapper.PatientinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.slionh.funhere.entity.Patientinfo" >
+    <id column="cardNo" property="cardno" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="packageflag" property="packageflag" jdbcType="VARCHAR" />
+    <result column="home" property="home" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="formatted_address" property="formattedAddress" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="citycode" property="citycode" jdbcType="VARCHAR" />
+    <result column="district" property="district" jdbcType="VARCHAR" />
+    <result column="street" property="street" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="adcode" property="adcode" jdbcType="VARCHAR" />
+    <result column="location" property="location" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="reserved" property="reserved" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cardNo, name, packageflag, home, createtime, formatted_address, country, province, 
+    city, citycode, district, street, number, adcode, location, level, reserved
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.slionh.funhere.entity.PatientinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from patientInfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from patientInfo
+    where cardNo = #{cardno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from patientInfo
+    where cardNo = #{cardno,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.slionh.funhere.entity.PatientinfoExample" >
+    delete from patientInfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.slionh.funhere.entity.Patientinfo" >
+    <selectKey resultType="java.lang.String" keyProperty="cardno" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into patientInfo (name, packageflag, home, 
+      createtime, formatted_address, country, 
+      province, city, citycode, 
+      district, street, number, 
+      adcode, location, level, 
+      reserved)
+    values (#{name,jdbcType=VARCHAR}, #{packageflag,jdbcType=VARCHAR}, #{home,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{formattedAddress,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{citycode,jdbcType=VARCHAR}, 
+      #{district,jdbcType=VARCHAR}, #{street,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR}, 
+      #{adcode,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, 
+      #{reserved,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.slionh.funhere.entity.Patientinfo" >
+    <selectKey resultType="java.lang.String" keyProperty="cardno" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into patientInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="packageflag != null" >
+        packageflag,
+      </if>
+      <if test="home != null" >
+        home,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="formattedAddress != null" >
+        formatted_address,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="citycode != null" >
+        citycode,
+      </if>
+      <if test="district != null" >
+        district,
+      </if>
+      <if test="street != null" >
+        street,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="adcode != null" >
+        adcode,
+      </if>
+      <if test="location != null" >
+        location,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="reserved != null" >
+        reserved,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="packageflag != null" >
+        #{packageflag,jdbcType=VARCHAR},
+      </if>
+      <if test="home != null" >
+        #{home,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="formattedAddress != null" >
+        #{formattedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="citycode != null" >
+        #{citycode,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="street != null" >
+        #{street,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="adcode != null" >
+        #{adcode,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved != null" >
+        #{reserved,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.slionh.funhere.entity.PatientinfoExample" resultType="java.lang.Integer" >
+    select count(*) from patientInfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update patientInfo
+    <set >
+      <if test="record.cardno != null" >
+        cardNo = #{record.cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.packageflag != null" >
+        packageflag = #{record.packageflag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.home != null" >
+        home = #{record.home,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.formattedAddress != null" >
+        formatted_address = #{record.formattedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.citycode != null" >
+        citycode = #{record.citycode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.district != null" >
+        district = #{record.district,jdbcType=VARCHAR},
+      </if>
+      <if test="record.street != null" >
+        street = #{record.street,jdbcType=VARCHAR},
+      </if>
+      <if test="record.number != null" >
+        number = #{record.number,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adcode != null" >
+        adcode = #{record.adcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.location != null" >
+        location = #{record.location,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved != null" >
+        reserved = #{record.reserved,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update patientInfo
+    set cardNo = #{record.cardno,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      packageflag = #{record.packageflag,jdbcType=VARCHAR},
+      home = #{record.home,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      formatted_address = #{record.formattedAddress,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      citycode = #{record.citycode,jdbcType=VARCHAR},
+      district = #{record.district,jdbcType=VARCHAR},
+      street = #{record.street,jdbcType=VARCHAR},
+      number = #{record.number,jdbcType=VARCHAR},
+      adcode = #{record.adcode,jdbcType=VARCHAR},
+      location = #{record.location,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=VARCHAR},
+      reserved = #{record.reserved,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.slionh.funhere.entity.Patientinfo" >
+    update patientInfo
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="packageflag != null" >
+        packageflag = #{packageflag,jdbcType=VARCHAR},
+      </if>
+      <if test="home != null" >
+        home = #{home,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="formattedAddress != null" >
+        formatted_address = #{formattedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="citycode != null" >
+        citycode = #{citycode,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="street != null" >
+        street = #{street,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="adcode != null" >
+        adcode = #{adcode,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved != null" >
+        reserved = #{reserved,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cardNo = #{cardno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.slionh.funhere.entity.Patientinfo" >
+    update patientInfo
+    set name = #{name,jdbcType=VARCHAR},
+      packageflag = #{packageflag,jdbcType=VARCHAR},
+      home = #{home,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      formatted_address = #{formattedAddress,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      citycode = #{citycode,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      street = #{street,jdbcType=VARCHAR},
+      number = #{number,jdbcType=VARCHAR},
+      adcode = #{adcode,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      level = #{level,jdbcType=VARCHAR},
+      reserved = #{reserved,jdbcType=VARCHAR}
+    where cardNo = #{cardno,jdbcType=VARCHAR}
+  </update>
+</mapper>

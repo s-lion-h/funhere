@@ -43,15 +43,19 @@
         </javaClientGenerator>
 
         <!--<table schema="smarketdb" tableName="category"/>-->
-        <table schema="funhere" tableName="user">
-            <generatedKey column="userId" sqlStatement="Mysql" identity="true"/>
-        </table>
-        <table schema="funhere" tableName="type">
-            <generatedKey column="typeId" sqlStatement="Mysql" identity="true"/>
-        </table>
-        <table schema="funhere" tableName="activity">
-            <generatedKey column="activityId" sqlStatement="Mysql" identity="true"/>
-            <columnOverride column="startTime" jdbcType="TIMESTAMP"/>
+        <!--<table schema="funhere" tableName="user">-->
+            <!--<generatedKey column="userId" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table schema="funhere" tableName="type">-->
+            <!--<generatedKey column="typeId" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table schema="funhere" tableName="activity">-->
+            <!--<generatedKey column="activityId" sqlStatement="Mysql" identity="true"/>-->
+            <!--<columnOverride column="startTime" jdbcType="TIMESTAMP"/>-->
+        <!--</table>-->
+        <table schema="funhere" tableName="patientInfo">
+            <generatedKey column="cardNo" sqlStatement="Mysql" identity="true"/>
+            <columnOverride column="createtime" jdbcType="TIMESTAMP"/>
         </table>
     </context>
 </generatorConfiguration>
